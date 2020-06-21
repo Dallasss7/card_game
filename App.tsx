@@ -1,19 +1,26 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, ImageBackground, View } from 'react-native';
+
+import CardDeck from './src/components/deck';
+// const HelloWorld = require('./src/components/hello-world.tsx');
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-    </View>
-  );
-}
+	var styles = StyleSheet.create({
+		image: {
+			flex: 1,
+			resizeMode: 'cover',
+		  },
+		  container: {
+			height: '100%',
+			width: '100%',
+		  }
+	});
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  return (
+	<View style={styles.container}>
+	<ImageBackground source={require('./assets/greenPaper.jpg')} style={styles.image}>
+		<CardDeck />
+	</ImageBackground>
+  </View>
+  );
+};
