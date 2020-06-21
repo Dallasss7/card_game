@@ -16,6 +16,16 @@ export default function App() {
 		  }
 	});
 
+	function getInitialState() {
+        return {
+            showCards: false,
+        };
+    }
+
+    // function toggleCancel() {
+        
+    // }
+
   return (
 	<View style={styles.container}>
 	<ImageBackground source={require('./assets/greenPaper.jpg')} style={styles.image}>

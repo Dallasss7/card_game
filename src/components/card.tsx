@@ -1,35 +1,35 @@
 import React from 'react';
-import { View, StyleSheet, ImageBackground } from 'react-native';
+import { TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 
 const card = () => {
 	const styles = StyleSheet.create({
 		image: {
-			// padding: 50
 			height: 80,
-			width: 60
+			width: 60,
 		},
 		container: {
-			// borderColor: 'red',
-			// borderStyle: 'solid',
-			// borderWidth: 2,
-			margin: '1%',
-			paddingTop: '35%',
-			// height: 10,
-			// width: 10
-			// backgroundColor: 'red'
-			// backgroundColor: "powderblue",
+			borderColor: 'red',
+			borderStyle: 'solid',
+			borderWidth: 2,
+			borderRadius: 5,
+			overflow: 'hidden',
+			marginTop: '35%'
 		}
 	})
 
+	function alertCard() {
+		alert('You touched a thingy');
+	}
+
 	return (
-	<View style={styles.container}>
+	<TouchableOpacity style={styles.container} onPress={alertCard}>
 		   <ImageBackground
           source={require('../../assets/playingCard.jpg')}
-          resizeMode= 'cover'
+		  resizeMode= 'cover'
+		  borderRadius={6}
           style={styles.image}
         ></ImageBackground>
-		{/* <ImageBackground source={require('../../assets/playingCard.jpg')} style={styles.image} /> */}
-	</View>
+	</TouchableOpacity>
 	);
 }
 

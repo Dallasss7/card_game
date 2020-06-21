@@ -6,16 +6,18 @@ import Card from './card';
 	const cardDeck = () => {
 		var styles = StyleSheet.create({
 			  container: {
-				paddingTop: 45,
-				paddingBottom: 45,
+				paddingTop: '10%',
+				paddingBottom: '10%',
 				borderWidth: 2,
 				borderColor: 'yellow',
 				borderStyle: 'solid',
-				flex: 1,
-				justifyContent: 'space-evenly',
+				flex: 0.9,
+				alignSelf: 'center',
+				alignItems: 'center',
+				justifyContent: 'space-between',
 				flexDirection: 'row',
-				alignItems: 'flex-start',
-				flexWrap: 'wrap'
+				flexWrap: 'wrap',
+				width: '90%',
 				
 			  }
 		})
