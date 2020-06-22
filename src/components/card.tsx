@@ -1,36 +1,64 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 
-const card = () => {
-	const styles = StyleSheet.create({
+export default class Card extends Component {
+	styles = StyleSheet.create({
 		image: {
 			height: 80,
 			width: 60,
 		},
+		imageClick: {
+			backgroundColor: '#fff'
+		},
 		container: {
-			borderColor: 'red',
-			borderStyle: 'solid',
-			borderWidth: 2,
+			// borderColor: 'red',
+			// borderStyle: 'solid',
+			// borderWidth: 2,
 			borderRadius: 5,
 			overflow: 'hidden',
 			marginTop: '35%'
 		}
 	})
+    state = {
+		selectedImage: '../../assets/playingCard2.jpg',
+		defaultImage: require('../../assets/playingCard.jpg'),
+		match: false,
+		press: false,
+	  };
 
-	function alertCard() {
-		alert('You touched a thingy');
+	toggleState() {
+		this.setState({
+			match: !this.state.match
+		})
 	}
 
-	return (
-	<TouchableOpacity style={styles.container} onPress={alertCard}>
-		   <ImageBackground
-          source={require('../../assets/playingCard.jpg')}
-		  resizeMode= 'cover'
-		  borderRadius={6}
-          style={styles.image}
-        ></ImageBackground>
-	</TouchableOpacity>
-	);
-}
+	togglePress() {
+		setTimeout(() => {
+			this.setState({
+				defaultImage: require('../../assets/grayed_out.jpg')
+			})
+		}, 200)
+		setTimeout(() => {
+			this.setState({
+				defaultImage: require('../../assets/playingCard.jpg')
+			})
+		}, 1000)
+	}
 
-export default card;
+	render() {
+		return (
+			<TouchableOpacity 
+				style={this.styles.container} 
+				onPress={() => {this.togglePress()}}>
+					{!this.state.match && (
+						<ImageBackground
+						source={this.state.defaultImage}
+						resizeMode= 'cover'
+						borderRadius={6}
+						style={this.styles.image}
+					></ImageBackground>
+					)}
+			</TouchableOpacity>
+		);
+	}
+}

@@ -6,11 +6,11 @@ import Card from './card';
 	const cardDeck = () => {
 		var styles = StyleSheet.create({
 			  container: {
+				// borderWidth: 2,
+				// borderColor: 'yellow',
+				// borderStyle: 'solid',
 				paddingTop: '10%',
 				paddingBottom: '10%',
-				borderWidth: 2,
-				borderColor: 'yellow',
-				borderStyle: 'solid',
 				flex: 0.9,
 				alignSelf: 'center',
 				alignItems: 'center',
