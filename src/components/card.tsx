@@ -1,7 +1,25 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
+import { TouchableOpacity, StyleSheet, ImageBackground, View, Text, ImageSourcePropType } from 'react-native';
 
-export default class Card extends Component {
+interface cardState {
+	defaultImage: ImageSourcePropType,
+	match: boolean,
+	press: boolean,
+}
+
+interface cardProps {
+	letterDisplay: any
+}
+
+export default class Card extends Component<cardProps, cardState> {
+	constructor(props: any) {
+		super(props);
+		this.state = {
+			defaultImage: require('../../assets/playingCard.jpg'),
+			match: false,
+			press: false,
+		  };
+	}
 	styles = StyleSheet.create({
 		image: {
 			height: 80,
@@ -17,14 +35,25 @@ export default class Card extends Component {
 			borderRadius: 5,
 			overflow: 'hidden',
 			marginTop: '35%'
+		},
+		letterView: {
+			position: 'absolute',
+			top: 0,
+			left: 0,
+			right: 0,
+			bottom: 0,
+			justifyContent: 'center',
+			alignItems: 'center'
+		},
+		letter: {
+			color: 'black',
+			fontSize: 30
 		}
 	})
-    state = {
-		selectedImage: '../../assets/playingCard2.jpg',
-		defaultImage: require('../../assets/playingCard.jpg'),
-		match: false,
-		press: false,
-	  };
+
+	  letterDisplay(letter: string) {
+		return letter;
+	  }
 
 	toggleState() {
 		this.setState({
@@ -35,14 +64,16 @@ export default class Card extends Component {
 	togglePress() {
 		setTimeout(() => {
 			this.setState({
+				press: !this.state.press,
 				defaultImage: require('../../assets/grayed_out.jpg')
 			})
-		}, 200)
+		}, 500)
 		setTimeout(() => {
 			this.setState({
-				defaultImage: require('../../assets/playingCard.jpg')
+				defaultImage: require('../../assets/playingCard.jpg'),
+				press: !this.state.press
 			})
-		}, 1000)
+		}, 1500)
 	}
 
 	render() {
@@ -56,7 +87,13 @@ export default class Card extends Component {
 						resizeMode= 'cover'
 						borderRadius={6}
 						style={this.styles.image}
-					></ImageBackground>
+					>
+						{this.state.press && (
+							<View style={this.styles.letterView}>
+								<Text style={this.styles.letter}>{this.props.letterDisplay()}</Text>
+							</View>
+						)}
+					</ImageBackground>
 					)}
 			</TouchableOpacity>
 		);
