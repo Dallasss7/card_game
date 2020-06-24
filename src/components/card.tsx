@@ -1,15 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, useRef, useEffect } from 'react';
 import { TouchableOpacity, StyleSheet, ImageBackground, View, Text, ImageSourcePropType } from 'react-native';
+import { cardProps, cardState } from '../interfaces';
 
-interface cardState {
-	defaultImage: ImageSourcePropType,
-	match: boolean,
-	press: boolean,
-}
 
-interface cardProps {
-	letterDisplay: any
-}
+import { globalObj } from '../global';
 
 export default class Card extends Component<cardProps, cardState> {
 	constructor(props: any) {
@@ -18,12 +12,16 @@ export default class Card extends Component<cardProps, cardState> {
 			defaultImage: require('../../assets/playingCard.jpg'),
 			match: false,
 			press: false,
+			held: null,
 		  };
+
+		globalObj.held = '';
 	}
 	styles = StyleSheet.create({
 		image: {
 			height: 80,
 			width: 60,
+			display: 'flex'
 		},
 		imageClick: {
 			backgroundColor: '#fff'
@@ -48,10 +46,14 @@ export default class Card extends Component<cardProps, cardState> {
 		letter: {
 			color: 'black',
 			fontSize: 30
+		},
+		displayNone: {
+			display: 'none'
 		}
 	})
 
 	  letterDisplay(letter: string) {
+		  alert(letter)
 		return letter;
 	  }
 
@@ -62,40 +64,114 @@ export default class Card extends Component<cardProps, cardState> {
 	}
 
 	togglePress() {
-		setTimeout(() => {
-			this.setState({
-				press: !this.state.press,
-				defaultImage: require('../../assets/grayed_out.jpg')
-			})
-		}, 500)
-		setTimeout(() => {
-			this.setState({
-				defaultImage: require('../../assets/playingCard.jpg'),
-				press: !this.state.press
-			})
-		}, 1500)
+		
+		//if the card is already held
+		if (globalObj.previous === this) {
+			globalObj.held = ''
+			alert('You already have this card held.');
+			return;
+		}
+
+		// display the card
+		this.setState({
+			press: true,
+			defaultImage: require('../../assets/grayed_out.jpg'),
+			previous: this.state,
+			held: !this.state.held
+		});
+
+		// if no other card is held
+		if(!globalObj.held) {
+			globalObj.held = this.props.letterDisplay();
+			globalObj.previous = this;
+		}
+
+		// if a card is already held
+		else if (globalObj.held) {
+			
+			//do they match ?
+			if (globalObj.held.toLowerCase() === this.props.letterDisplay().toLowerCase()) {
+				alert('match');
+				
+				// globalObj.held = '';
+				
+				this.setState({
+					match: !this.state.match,
+				})
+
+				globalObj.previous?.setState({
+					match: true
+				})
+
+				globalObj.previous = undefined;
+
+			} else {
+				// alert('no match');
+
+				setTimeout(() => {
+					this.setState({
+						press: false,
+						defaultImage:  require('../../assets/playingCard.jpg'),
+					})
+					globalObj.held = '';
+					globalObj.previous?.setState({
+						press: false,
+						defaultImage:  require('../../assets/playingCard.jpg'),
+					})
+					globalObj.previous = undefined;
+				}, 700)
+				globalObj.held = '';
+			}
+
+		}
 	}
 
 	render() {
+
 		return (
-			<TouchableOpacity 
+			<TouchableOpacity
 				style={this.styles.container} 
 				onPress={() => {this.togglePress()}}>
-					{!this.state.match && (
+					{!this.state.match ?
 						<ImageBackground
-						source={this.state.defaultImage}
-						resizeMode= 'cover'
-						borderRadius={6}
-						style={this.styles.image}
+							source={this.state.defaultImage}
+							resizeMode= 'cover'
+							borderRadius={6}
+							style={this.styles.image}
 					>
 						{this.state.press && (
-							<View style={this.styles.letterView}>
+							<View 
+								key={this.props.letterDisplay()}
+								style={this.styles.letterView}>
 								<Text style={this.styles.letter}>{this.props.letterDisplay()}</Text>
 							</View>
 						)}
 					</ImageBackground>
-					)}
+					: <Text style={{color: 'white'}}>MATCH</Text> }
 			</TouchableOpacity>
 		);
+
+		// return (
+		// 	<TouchableOpacity
+		// 		style={this.styles.container} 
+		// 		onPress={() => {this.togglePress()}}>
+		// 			{!this.state.match && (
+		// 				<ImageBackground
+		// 					source={this.state.defaultImage}
+		// 					resizeMode= 'cover'
+		// 					borderRadius={6}
+		// 					style={this.styles.image}
+		// 			>
+		// 				{this.state.press && (
+		// 					<View 
+		// 						key={this.props.letterDisplay()}
+		// 						style={this.styles.letterView}>
+		// 						<Text style={this.styles.letter}>{this.props.letterDisplay()}</Text>
+		// 					</View>
+		// 				)}
+		// 			</ImageBackground>
+		// 			)}
+		// 	</TouchableOpacity>
+		// );
 	}
 }

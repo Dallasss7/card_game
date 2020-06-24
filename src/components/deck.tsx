@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Button, View, Text, StyleSheet, Image, ImageBackgroundBase } from 'react-native';
+import { Button, View, Text, StyleSheet, Image, ImageBackgroundBase, TouchableOpacity } from 'react-native';
 
 import Card from './card';
 
 interface deckState {
 	letters: string,
-	cards: any[]	
+	cards: any[],
+	reshuffle: boolean
 }
 
 interface deckProps {}
@@ -16,16 +17,17 @@ export default class CardDeck extends Component<deckProps, deckState>{
 		super(props)
 		this.state = {
 			letters: 'ABCDEFGHIJKLMNOPQabcdefghijklmnopq',
-			cards: []
+			cards: [],
+			reshuffle: false,
 		}
 
 		this.randomLetters = this.randomizeLetters();
 	}
 	styles = StyleSheet.create({
 			container: {
-			// borderWidth: 2,
-			// borderColor: 'yellow',
-			// borderStyle: 'solid',
+			borderWidth: 2,
+			borderColor: 'yellow',
+			borderStyle: 'solid',
 			paddingTop: '10%',
 			paddingBottom: '10%',
 			flex: 0.9,
@@ -51,20 +53,26 @@ export default class CardDeck extends Component<deckProps, deckState>{
 		 return randomizedLetters;
 	}
 
-	passLetter(letter: string) {
-		return letter;
-	}
+	componentWillReceiveProps = (nextProps: any) => {
+		this.setState({ cards: nextProps });  
+	  }
+
+	// forceUpdateHandler = () => {
+	// 	// this.randomLetters = this.randomizeLetters();
+	// 	this.setState({
+	// 		cards: []
+	// 	});
+	// };
 	
 	render() {
-
-		let cards = [];
-
+		
 		for(let i = 0; i < this.randomLetters.length; i++){
 	
-			cards.push(
+			this.state.cards.push(
 				<View  key = {i}>
-					<Card letterDisplay={() => this.randomLetters.charAt(i)}>
-					</Card>
+						<Card
+							letterDisplay={() => this.randomLetters.charAt(i)}>
+						</Card>
 				</View>
 			)
 		}
@@ -72,7 +80,11 @@ export default class CardDeck extends Component<deckProps, deckState>{
 		
 		return (
 			<View style={this.styles.container}>
-				{ cards }
+				{/* <Button
+					title='Reshuffle'
+					onPress={() => {this.componentWillReceiveProps([]) }}
+				></Button> */}
+				{ this.state.cards }
 			</View>
 		)
 }
