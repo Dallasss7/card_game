@@ -74,43 +74,4 @@ export default class App extends Component {
 		</ImageBackground>
 	)
 	}
-
-
-
-
-	// return (
-	// 	<View style={styles.container}>
-	// 	<ImageBackground source={require('./assets/greenPaper.jpg')} style={styles.image}>
-	// 	<View style={styles.menu}>
-	// 		<Toggle></Toggle>
-	// 	</View>
-	// 		{/* <CardDeck /> */}
-	// 	</ImageBackground>
-	// 	</View>
-	// 	);
-
-	// if (showCards) {
-	// 	return (
-	// 		<View style={styles.container}>
-	// 		<ImageBackground source={require('./assets/greenPaper.jpg')} style={styles.image}>
-	// 			<CardDeck />
-	// 		</ImageBackground>
-	// 	  </View>
-	// 	  );
-	// } else {
-	// 	return (
-	// 		<View style={styles.container}>
-	// 			<ImageBackground source={require('./assets/greenPaper.jpg')} style={styles.image}>
-	// 				<View style={styles.menu}>
-	// 					<Button
-	// 					title='entry way'
-	// 					onPress={() => {toggleState(showCards)}}
-	// 					>HERE
-	// 					</Button>
-	// 				</View>
-	// 			</ImageBackground>
-	// 	  	</View>
-	// 	);
-	// }
-
 };

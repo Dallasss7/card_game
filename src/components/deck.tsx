@@ -25,9 +25,9 @@ export default class CardDeck extends Component<deckProps, deckState>{
 	}
 	styles = StyleSheet.create({
 			container: {
-			borderWidth: 2,
-			borderColor: 'yellow',
-			borderStyle: 'solid',
+			// borderWidth: 2,
+			// borderColor: 'yellow',
+			// borderStyle: 'solid',
 			paddingTop: '10%',
 			paddingBottom: '10%',
 			flex: 0.9,
@@ -50,19 +50,11 @@ export default class CardDeck extends Component<deckProps, deckState>{
 		for ( var i = 0; i < this.state.letters.length; i++ ) {
 			randomizedLetters += this.state.letters.charAt(Math.floor(Math.random() * this.state.letters.length))
 		 }
+
+		//  alert(this.state.letters.length + ' vs ' + randomizedLetters.length)
+
 		 return randomizedLetters;
 	}
-
-	componentWillReceiveProps = (nextProps: any) => {
-		this.setState({ cards: nextProps });  
-	  }
-
-	// forceUpdateHandler = () => {
-	// 	// this.randomLetters = this.randomizeLetters();
-	// 	this.setState({
-	// 		cards: []
-	// 	});
-	// };
 	
 	render() {
 		
@@ -80,10 +72,6 @@ export default class CardDeck extends Component<deckProps, deckState>{
 		
 		return (
 			<View style={this.styles.container}>
-				{/* <Button
-					title='Reshuffle'
-					onPress={() => {this.componentWillReceiveProps([]) }}
-				></Button> */}
 				{ this.state.cards }
 			</View>
 		)

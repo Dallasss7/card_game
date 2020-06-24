@@ -64,47 +64,53 @@ export default class Card extends Component<cardProps, cardState> {
 	}
 
 	togglePress() {
-		
-		//if the card is already held
+
+		//if a card is already held
 		if (globalObj.previous === this) {
-			globalObj.held = ''
 			alert('You already have this card held.');
 			return;
 		}
 
-		// display the card
-		this.setState({
-			press: true,
-			defaultImage: require('../../assets/grayed_out.jpg'),
-			previous: this.state,
-			held: !this.state.held
-		});
+		// if a card is not already held
+		else if(!globalObj.previous) {
 
-		// if no other card is held
-		if(!globalObj.held) {
-			globalObj.held = this.props.letterDisplay();
+			// display the card
+			this.setState({
+				press: true,
+				defaultImage: require('../../assets/grayed_out.jpg'),
+				previous: this.state,
+			});
+
 			globalObj.previous = this;
-		}
+			
+		} 
+		// if a card is held but its not this
+		else {
+			// display the card
+			this.setState({
+				press: true,
+				defaultImage: require('../../assets/grayed_out.jpg'),
+				previous: this.state,
+			});
 
-		// if a card is already held
-		else if (globalObj.held) {
+			globalObj.held = this.props.letterDisplay();
 			
 			//do they match ?
-			if (globalObj.held.toLowerCase() === this.props.letterDisplay().toLowerCase()) {
-				alert('match');
+			if (globalObj.previous.props.letterDisplay().toLowerCase() === this.props.letterDisplay().toLowerCase()) {
+				// alert('match');
 				
 				// globalObj.held = '';
-				
-				this.setState({
-					match: !this.state.match,
-				})
+				setTimeout(() => {
+					this.setState({
+						match: !this.state.match,
+					})
 
-				globalObj.previous?.setState({
-					match: true
-				})
+					globalObj.previous?.setState({
+						match: true
+					})
 
-				globalObj.previous = undefined;
-
+					globalObj.previous = undefined;
+				}, 700)
 			} else {
 				// alert('no match');
 
@@ -122,8 +128,67 @@ export default class Card extends Component<cardProps, cardState> {
 				}, 700)
 				globalObj.held = '';
 			}
-
 		}
+
+		// //if the card is already held
+		// if (globalObj.previous === this) {
+		// 	globalObj.held = ''
+		// 	alert('You already have this card held.');
+		// 	return;
+		// }
+
+		// // display the card
+		// this.setState({
+		// 	press: true,
+		// 	defaultImage: require('../../assets/grayed_out.jpg'),
+		// 	previous: this.state,
+		// 	held: !this.state.held
+		// });
+
+		// // if no other card is held
+		// if(!globalObj.held) {
+		// 	globalObj.held = this.props.letterDisplay();
+		// 	globalObj.previous = this;
+		// }
+
+		// // if a card is already held
+		// else if (globalObj.held) {
+			
+		// 	//do they match ?
+		// 	if (globalObj.held.toLowerCase() === this.props.letterDisplay().toLowerCase()) {
+		// 		// alert('match');
+				
+		// 		// globalObj.held = '';
+				
+		// 		this.setState({
+		// 			match: !this.state.match,
+		// 		})
+
+		// 		globalObj.previous?.setState({
+		// 			match: true
+		// 		})
+
+		// 		globalObj.previous = undefined;
+
+		// 	} else {
+		// 		// alert('no match');
+
+		// 		setTimeout(() => {
+		// 			this.setState({
+		// 				press: false,
+		// 				defaultImage:  require('../../assets/playingCard.jpg'),
+		// 			})
+		// 			globalObj.held = '';
+		// 			globalObj.previous?.setState({
+		// 				press: false,
+		// 				defaultImage:  require('../../assets/playingCard.jpg'),
+		// 			})
+		// 			globalObj.previous = undefined;
+		// 		}, 700)
+		// 		globalObj.held = '';
+		// 	}
+
+		// }
 	}
 
 	render() {
