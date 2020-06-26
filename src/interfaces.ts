@@ -10,12 +10,13 @@ export interface cardState {
 }
 
 export interface cardProps {
-	letterDisplay: any
+	letterDisplay: any,
+	toggleWinner: Function
 }
 
 
 export interface GlobalObj {
 	held: string,
-	click?: number,
+	matches: number,
 	previous?: Card
 }

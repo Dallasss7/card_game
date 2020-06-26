@@ -6,7 +6,8 @@ import Card from './card';
 interface deckState {
 	letters: string,
 	cards: any[],
-	reshuffle: boolean
+	reshuffle: boolean,
+	winner?: boolean
 }
 
 interface deckProps {}
@@ -18,7 +19,7 @@ export default class CardDeck extends Component<deckProps, deckState>{
 		this.state = {
 			letters: 'ABCDEFGHIJKLMNOPQabcdefghijklmnopq',
 			cards: [],
-			reshuffle: false,
+			reshuffle: false
 		}
 
 		this.randomLetters = this.randomizeLetters();
@@ -46,14 +47,15 @@ export default class CardDeck extends Component<deckProps, deckState>{
 	})
 
 	randomizeLetters() {
-		let randomizedLetters = '';
-		for ( var i = 0; i < this.state.letters.length; i++ ) {
-			randomizedLetters += this.state.letters.charAt(Math.floor(Math.random() * this.state.letters.length))
-		 }
-
-		//  alert(this.state.letters.length + ' vs ' + randomizedLetters.length)
-
+		var randomizedLetters = this.state.letters.split('').sort(function(){return 0.5-Math.random()}).join('');
 		 return randomizedLetters;
+	}
+
+	gameWinner = (winner :boolean)  =>{
+		alert('WINNER')
+		this.setState({
+			winner: winner
+		})
 	}
 	
 	render() {
@@ -63,16 +65,21 @@ export default class CardDeck extends Component<deckProps, deckState>{
 			this.state.cards.push(
 				<View  key = {i}>
 						<Card
-							letterDisplay={() => this.randomLetters.charAt(i)}>
+							letterDisplay={() => this.randomLetters.charAt(i)}
+							toggleWinner={this.gameWinner}>
 						</Card>
 				</View>
 			)
 		}
 		
 		
-		return (
+		return (this.state.winner ?
 			<View style={this.styles.container}>
 				{ this.state.cards }
+			</View>
+			:
+			<View>
+				<Text>WINNER</Text>
 			</View>
 		)
 }

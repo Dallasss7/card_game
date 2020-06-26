@@ -16,12 +16,19 @@ export default class Card extends Component<cardProps, cardState> {
 		  };
 
 		globalObj.held = '';
+		globalObj.matches = 0;
 	}
 	styles = StyleSheet.create({
 		image: {
 			height: 80,
 			width: 60,
 			display: 'flex'
+		},
+		hidden: {
+			height: 80,
+			width: 60,
+			display: 'flex',
+			opacity: 0.0
 		},
 		imageClick: {
 			backgroundColor: '#fff'
@@ -110,6 +117,15 @@ export default class Card extends Component<cardProps, cardState> {
 					})
 
 					globalObj.previous = undefined;
+
+					if (globalObj.matches < 17) {
+						globalObj.matches++
+						alert(globalObj.matches)
+
+						if(globalObj.matches === 17) {
+							this.toggleWinner(true);
+						}
+					}
 				}, 700)
 			} else {
 				// alert('no match');
@@ -129,7 +145,6 @@ export default class Card extends Component<cardProps, cardState> {
 				globalObj.held = '';
 			}
 		}
-
 		// //if the card is already held
 		// if (globalObj.previous === this) {
 		// 	globalObj.held = ''
@@ -191,18 +206,21 @@ export default class Card extends Component<cardProps, cardState> {
 		// }
 	}
 
+	toggleWinner(winner: boolean) {
+		this.props.toggleWinner(winner);
+	}
+
 	render() {
 
 		return (
 			<TouchableOpacity
 				style={this.styles.container} 
-				onPress={() => {this.togglePress()}}>
-					{!this.state.match ?
+				onPress={() => {!this.state.match ? this.togglePress() : null}}>
 						<ImageBackground
 							source={this.state.defaultImage}
 							resizeMode= 'cover'
 							borderRadius={6}
-							style={this.styles.image}
+							style={!this.state.match ? this.styles.image : this.styles.hidden}
 					>
 						{this.state.press && (
 							<View 
@@ -212,7 +230,6 @@ export default class Card extends Component<cardProps, cardState> {
 							</View>
 						)}
 					</ImageBackground>
-					: <Text style={{color: 'white'}}>MATCH</Text> }
 			</TouchableOpacity>
 		);
 
