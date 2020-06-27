@@ -1,12 +1,12 @@
-import { cardProps, cardState, GlobalObj } from './interfaces';
+import { GlobalObj } from './interfaces';
 
 export const globalObj: GlobalObj = {
-	held: '',
-	matches: 0
-	// previous: {
-	// 	defaultImage: 1,
-	// 	match: false,
-	// 	press: false,
-	// 	held: ''
-	// }
+    held: '',
+    matches: 0
+    // previous: {
+    // 	defaultImage: 1,
+    // 	match: false,
+    // 	press: false,
+    // 	held: ''
+    // }
 };
