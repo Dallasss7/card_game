@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Button, View, Text, StyleSheet, Image, ImageBackgroundBase, TouchableOpacity } from 'react-native';
+// import Fireworks from 'react-native-fireworks';
 
 import Card from './card';
+import { RNConfetti } from './animations/RNConfetti';
 
 interface deckState {
 	letters: string,
@@ -43,6 +45,12 @@ export default class CardDeck extends Component<deckProps, deckState>{
 				fontSize: 14,
 				color: '#2f354b',
 				textAlign: 'center',
+			},
+			winner: {
+				fontSize: 28,
+				color: 'white',
+				textAlign: 'center',
+				flex: 1
 			}
 	})
 
@@ -72,14 +80,16 @@ export default class CardDeck extends Component<deckProps, deckState>{
 			)
 		}
 		
-		
+		{/* <RNConfetti></RNConfetti> */}
 		return (this.state.winner ?
 			<View style={this.styles.container}>
 				{ this.state.cards }
 			</View>
 			:
-			<View>
-				<Text>WINNER</Text>
+			<View style={this.styles.container}>
+				<RNConfetti>
+					<Text style={this.styles.winner}>WINNER</Text>
+				</RNConfetti>
 			</View>
 		)
 }
