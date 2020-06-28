@@ -2,7 +2,9 @@ import { GlobalObj } from './interfaces';
 
 export const globalObj: GlobalObj = {
     held: '',
-    matches: 0
+    difficulty: false,
+    matches: 0,
+    deckType: 0
     // previous: {
     // 	defaultImage: 1,
     // 	match: false,

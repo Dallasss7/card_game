@@ -6,12 +6,12 @@ import {
     View,
     Text
 } from 'react-native';
-import { cardProps, cardState } from '../interfaces';
+import { CardProps, CardState } from '../interfaces';
 
 import { globalObj } from '../global';
 
-export default class Card extends Component<cardProps, cardState> {
-    constructor(props: cardProps) {
+export default class Card extends Component<CardProps, CardState> {
+    constructor(props: CardProps) {
         super(props);
         this.state = {
             defaultImage: require('../../assets/playingCard.jpg'),
@@ -61,11 +61,11 @@ export default class Card extends Component<cardProps, cardState> {
         },
         displayNone: {
             display: 'none'
-		}
+        }
     });
 
     letterDisplay(letter: string): string {
-        alert(letter);
+        // alert(letter);
         return letter;
     }
 

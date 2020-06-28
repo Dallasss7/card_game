@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
-import {
-    View,
-    Text,
-    StyleSheet,
-} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 import Card from './card';
 import { RNConfetti } from './animations/RNConfetti';
+import { DeckState } from '../interfaces';
 
-interface deckState {
-    letters: string;
-    cards: JSX.Element[];
-    reshuffle: boolean;
-    winner?: boolean;
-}
-
-export default class CardDeck extends Component<unknown, deckState> {
+export default class CardDeck extends Component<unknown, DeckState> {
     public randomLetters = '';
     constructor(props: unknown) {
         super(props);
@@ -29,7 +19,7 @@ export default class CardDeck extends Component<unknown, deckState> {
     }
     styles = StyleSheet.create({
         container: {
-            // borderWidth: 2,	
+            // borderWidth: 2,
             // borderColor: 'yellow',
             // borderStyle: 'solid',
             paddingTop: '10%',
@@ -41,23 +31,23 @@ export default class CardDeck extends Component<unknown, deckState> {
             flexDirection: 'row',
             flexWrap: 'wrap',
             width: '90%'
-		},
-		winner_container: {
+        },
+        winner_container: {
             paddingTop: '10%',
             paddingBottom: '10%',
             flex: 0.9,
             alignSelf: 'center',
             justifyContent: 'center',
             width: '90%'
-		},
+        },
         letter: {
             fontSize: 14,
-            color: '#2f354b',
+            color: '#2f354b'
         },
         winner: {
             fontSize: 28,
             color: 'white',
-            textAlign: 'center',
+            textAlign: 'center'
         }
     });
 
@@ -65,14 +55,13 @@ export default class CardDeck extends Component<unknown, deckState> {
         const randomizedLetters = this.state.letters
             .split('')
             .sort(function () {
-                return 0.5-Math.random();
+                return 0.5 - Math.random();
             })
             .join('');
         return randomizedLetters;
     }
 
     gameWinner = (winner: boolean): void => {
-        alert('WINNER');
         this.setState({
             winner: winner
         });
@@ -95,7 +84,7 @@ export default class CardDeck extends Component<unknown, deckState> {
         ) : (
             <View style={this.styles.winner_container}>
                 <RNConfetti />
-				<Text style={this.styles.winner}>WINNER!</Text>
+                <Text style={this.styles.winner}>WINNER!</Text>
             </View>
         );
     }
