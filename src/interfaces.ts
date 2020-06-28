@@ -10,19 +10,20 @@ export interface CardState {
 }
 
 export interface CardProps {
-    letterDisplay: () => string;
+    letterDisplay: () => string | number;
     toggleWinner: (winner) => void;
 }
 
 export interface DeckState {
     letters: string;
+    numbers: number[];
     cards: JSX.Element[];
     reshuffle: boolean;
     winner?: boolean;
 }
 
 export interface GlobalObj {
-    held: string;
+    held: string | number;
     matches: number;
     difficulty?: boolean;
     previous?: Card;

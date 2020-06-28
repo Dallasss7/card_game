@@ -4,18 +4,63 @@ import { View, Text, StyleSheet } from 'react-native';
 import Card from './card';
 import { RNConfetti } from './animations/RNConfetti';
 import { DeckState } from '../interfaces';
+import { globalObj } from '../global';
+
+// [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
 
 export default class CardDeck extends Component<unknown, DeckState> {
     public randomLetters = '';
     constructor(props: unknown) {
         super(props);
         this.state = {
-            letters: 'ABCDEFGHIJKLMNOPQabcdefghijklmnopq',
             cards: [],
+            letters: this.isDeckTypeDefault()
+                ? 'abcdefghijklmnopqabcdefghijklmnopq'
+                : '',
+            numbers: !this.isDeckTypeDefault()
+                ? [
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6,
+                      7,
+                      8,
+                      9,
+                      10,
+                      11,
+                      12,
+                      13,
+                      14,
+                      15,
+                      16,
+                      17,
+                      1,
+                      2,
+                      3,
+                      4,
+                      5,
+                      6,
+                      7,
+                      8,
+                      9,
+                      10,
+                      11,
+                      12,
+                      13,
+                      14,
+                      15,
+                      16,
+                      17
+                  ]
+                : [-1],
             reshuffle: false
         };
 
-        this.randomLetters = this.randomizeLetters();
+        this.isDeckTypeDefault()
+            ? (this.randomLetters = this.randomizeLetters())
+            : '';
     }
     styles = StyleSheet.create({
         container: {
@@ -52,12 +97,15 @@ export default class CardDeck extends Component<unknown, DeckState> {
     });
 
     randomizeLetters(): string {
-        const randomizedLetters = this.state.letters
-            .split('')
-            .sort(function () {
-                return 0.5 - Math.random();
-            })
-            .join('');
+        let randomizedLetters = '';
+        if (this.isDeckTypeDefault() && this.state.letters) {
+            randomizedLetters = this.state.letters
+                .split('')
+                .sort(function () {
+                    return 0.5 - Math.random();
+                })
+                .join('');
+        }
         return randomizedLetters;
     }
 
@@ -67,16 +115,34 @@ export default class CardDeck extends Component<unknown, DeckState> {
         });
     };
 
+    isDeckTypeDefault(): boolean {
+        return globalObj.deckType === 0;
+    }
+
     render(): JSX.Element {
-        for (let i = 0; i < this.randomLetters.length; i++) {
-            this.state.cards.push(
-                <View key={i}>
-                    <Card
-                        letterDisplay={() => this.randomLetters.charAt(i)}
-                        toggleWinner={this.gameWinner}
-                    ></Card>
-                </View>
-            );
+        if (this.isDeckTypeDefault()) {
+            for (let i = 0; i < this.randomLetters.length; i++) {
+                this.state.cards.push(
+                    <View key={i}>
+                        <Card
+                            letterDisplay={() => this.randomLetters.charAt(i)}
+                            toggleWinner={this.gameWinner}
+                        ></Card>
+                    </View>
+                );
+            }
+        } else {
+            this.state.numbers?.sort(() => 0.5 - Math.random());
+            for (let i = 0; i < this.state.numbers.length; i++) {
+                this.state.cards.push(
+                    <View key={i}>
+                        <Card
+                            letterDisplay={() => this.state.numbers[i]}
+                            toggleWinner={this.gameWinner}
+                        ></Card>
+                    </View>
+                );
+            }
         }
 
         return !this.state.winner ? (

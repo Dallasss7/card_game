@@ -4,7 +4,8 @@ import {
     StyleSheet,
     ImageBackground,
     View,
-    Text
+    Text,
+    ImageSourcePropType
 } from 'react-native';
 import { CardProps, CardState } from '../interfaces';
 
@@ -14,7 +15,7 @@ export default class Card extends Component<CardProps, CardState> {
     constructor(props: CardProps) {
         super(props);
         this.state = {
-            defaultImage: require('../../assets/playingCard.jpg'),
+            defaultImage: this.checkDeckType(),
             match: false,
             press: false,
             held: undefined
@@ -64,7 +65,7 @@ export default class Card extends Component<CardProps, CardState> {
         }
     });
 
-    letterDisplay(letter: string): string {
+    letterDisplay(letter: string | number): string | number {
         // alert(letter);
         return letter;
     }
@@ -106,8 +107,8 @@ export default class Card extends Component<CardProps, CardState> {
 
             //do they match ?
             if (
-                globalObj.previous.props.letterDisplay().toLowerCase() ===
-                this.props.letterDisplay().toLowerCase()
+                globalObj.previous.props.letterDisplay() ===
+                this.props.letterDisplay()
             ) {
                 // alert('match');
 
@@ -138,18 +139,24 @@ export default class Card extends Component<CardProps, CardState> {
                 setTimeout(() => {
                     this.setState({
                         press: false,
-                        defaultImage: require('../../assets/playingCard.jpg')
+                        defaultImage: this.checkDeckType()
                     });
                     globalObj.held = '';
                     globalObj.previous?.setState({
                         press: false,
-                        defaultImage: require('../../assets/playingCard.jpg')
+                        defaultImage: this.checkDeckType()
                     });
                     globalObj.previous = undefined;
                 }, 700);
                 globalObj.held = '';
             }
         }
+    }
+
+    checkDeckType(): ImageSourcePropType {
+        return globalObj.deckType === 0
+            ? require('../../assets/playingCard.jpg')
+            : require('../../assets/playingCard2.jpg');
     }
 
     toggleWinner(winner: boolean): void {
