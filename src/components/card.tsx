@@ -61,7 +61,7 @@ export default class Card extends Component<cardProps, cardState> {
         },
         displayNone: {
             display: 'none'
-        }
+		}
     });
 
     letterDisplay(letter: string): string {

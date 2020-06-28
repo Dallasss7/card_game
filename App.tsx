@@ -4,8 +4,13 @@ import {
     ImageBackground,
     View,
     Button,
-    BackHandler
+    BackHandler,
+	TouchableOpacity,
+	Text,
+	ActivityIndicator
 } from 'react-native';
+import IconEntypo from 'react-native-vector-icons/Entypo';
+import IconFeather from 'react-native-vector-icons/Feather';
 
 import CardDeck from './src/components/deck';
 
@@ -28,15 +33,48 @@ export default class App extends Component {
         menu: {
             // borderStyle: 'solid',
             // borderWidth: 2,
-            // borderColor: 'orange',
+			// borderColor: 'orange',
+			width: '50%',
             height: '20%',
-            alignSelf: 'center'
-        }
+			alignSelf: 'center',
+			justifyContent: 'space-between'
+		},
+		icon: {
+            // borderStyle: 'solid',
+            // borderWidth: 2,
+			// borderColor: 'orange',
+			alignItems: 'center',
+
+		},
+		icon_text: {
+			color: 'white'
+		},
+		drawer: {
+            // borderStyle: 'solid',
+            // borderWidth: 2,
+			// borderColor: 'orange',
+			borderRadius: 25,
+            alignSelf: 'center',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexDirection: 'row',
+            flexWrap: 'nowrap',
+			width: '90%',
+			margin: 'auto'
+		},
+		loading: {
+            flex: 1,
+            height: '00%',
+            width: '100%',
+            alignItems: 'center',
+            justifyContent: 'center'
+		}
     });
 
     state = {
 		on: false,
-		open: false
+		open: false,
+		loading: false,
     };
 
     toggleState(): void {
@@ -45,11 +83,28 @@ export default class App extends Component {
         });
 	}
 	
+	toggleLoading(): void {
+		this.setState({
+			loading: !this.state.loading
+		});
+	}
+
 	handleClick():void {
 		this.setState({
 			open: !this.state.open
 		});
 	}
+
+	// componentDidMount() {
+	// 	BackHandler.addEventListener('hardwareBackPress',() => {this.setState({on: false}); return false});
+	// }
+
+	// onBackPress(): boolean{
+	// 	this.setState({
+	// 		on: false
+	// 	})
+	// 	return false; 
+	// }
 
     render(): JSX.Element {
         return (
@@ -58,23 +113,21 @@ export default class App extends Component {
                 style={this.styles.image}
             >
                 <View style={this.styles.container}>
-                    {this.state.on && <CardDeck />}
-                    <View
-                        style={{
-                            ...this.styles.menu,
-                            width: this.state.on ? '100%' : '50%',
-                            justifyContent: this.state.on
-                                ? 'flex-end'
-                                : 'space-between'
-                        }}
-                    >
-                        <Button
-                            title={!this.state.on ? 'Start' : 'Main Menu'}
-                            onPress={() => {
-                                this.toggleState();
-                            }}
-                        ></Button>
-                        {!this.state.on && (
+					{this.state.loading ? 
+						<ActivityIndicator style={this.styles.loading} size="large" color="#0000ff" />
+					: 
+					this.state.on && <CardDeck />
+					}
+                    <View style={this.styles.menu}>
+						{!this.state.on && (
+							<Button
+								title={'Start'}
+								onPress={() => {
+									this.toggleState();
+								}}
+							></Button>
+						)}
+						{!this.state.on && (
                             <Button
                                 title="Settings"
                                 onPress={() => {
@@ -91,6 +144,32 @@ export default class App extends Component {
                             ></Button>
                         )}
                     </View>
+					{this.state.on && (
+						<View style={this.styles.drawer}>
+							<View>
+								<TouchableOpacity onPress={() => {
+									this.toggleLoading();
+									setTimeout(() => {
+									this.toggleLoading()}, 700)
+									}} style={this.styles.icon}>
+									<IconEntypo name="shuffle" size={30} color="#4F8EF7" />
+									<Text style={this.styles.icon_text}>SHUFFLE</Text>
+								</TouchableOpacity>
+							</View>
+							<View>
+								<TouchableOpacity onPress={() => alert('Settings')} style={this.styles.icon}>
+									<IconFeather name="settings" size={30} color="#4F8EF7" />
+									<Text style={this.styles.icon_text}>SETTINGS</Text>
+								</TouchableOpacity>
+							</View>
+							<View>
+								<TouchableOpacity onPress={() => this.toggleState()} style={this.styles.icon}>
+									<IconEntypo name="menu" size={30} color="#4F8EF7" />
+									<Text style={this.styles.icon_text}>MAIN MENU</Text>
+								</TouchableOpacity>
+							</View>
+						</View>
+					)}
                 </View>
             </ImageBackground>
         );
