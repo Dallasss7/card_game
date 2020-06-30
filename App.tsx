@@ -15,12 +15,22 @@ import IconAntDesign from 'react-native-vector-icons/AntDesign';
 
 import CardDeck from './src/components/deck';
 import Settings from './src/components/settings';
+import { AppState } from './src/interfaces';
 
-export default class App extends Component {
+export default class App extends Component<null, AppState> {
+    constructor(props: null) {
+        super(props);
+
+        this.state = {
+            play: false,
+            openSettings: false,
+            loading: false
+        };
+    }
+
     styles = StyleSheet.create({
         image: {
-            flex: 1,
-            resizeMode: 'cover'
+            flex: 1
         },
         hide: {
             display: 'none'
@@ -77,12 +87,6 @@ export default class App extends Component {
             justifyContent: 'center'
         }
     });
-
-    state = {
-        play: false,
-        openSettings: false,
-        loading: false
-    };
 
     toggleState(): void {
         this.setState({

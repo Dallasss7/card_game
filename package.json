@@ -10,6 +10,9 @@
         "lint:fix": "eslint --fix",
         "prettier:write": "npx prettier --write **/*.{js,jsx,ts,tsx,json} && npx prettier --write *.{js,jsx,ts,tsx,json}",
         "start": "expo start",
+        "test": "node_modules/.bin/jest",
+        "test:coverage": "node_modules/.bin/jest --coverage",
+        "test:debug": "node --inspect-brk node_modules/jest/bin/jest.js --runInBand",
         "web": "expo start --web"
     },
     "husky": {
@@ -17,10 +20,13 @@
             "pre-commit": "pretty-quick --staged && npm run lint"
         }
     },
+    "jest": {
+        "preset": "jest-expo/universal"
+    },
     "dependencies": {
         "@react-navigation/native": "^5.6.1",
         "expo": "~37.0.3",
-        "react": "~16.9.0",
+        "react": "^16.13.1",
         "react-dom": "~16.9.0",
         "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.1.tar.gz",
         "react-native-confetti": "^0.1.0",
@@ -31,21 +37,24 @@
     },
     "devDependencies": {
         "@babel/core": "^7.8.6",
-        "@types/react": "~16.9.23",
+        "@types/react": "^16.9.41",
         "@types/react-native": "~0.61.17",
-        "@typescript-eslint/eslint-plugin": "^3.4.0",
-        "@typescript-eslint/parser": "^3.4.0",
+        "@typescript-eslint/eslint-plugin": "^3.5.0",
+        "@typescript-eslint/parser": "^3.5.0",
         "babel-preset-expo": "~8.1.0",
         "eslint": "^7.3.1",
         "eslint-config-airbnb-typescript": "^8.0.2",
         "eslint-config-prettier": "^6.11.0",
         "eslint-plugin-import": "^2.22.0",
         "eslint-plugin-jsx-a11y": "^6.3.1",
-        "eslint-plugin-react": "^7.20.0",
+        "eslint-plugin-react": "^7.20.2",
         "eslint-plugin-react-hooks": "^4.0.4",
         "husky": "^4.2.5",
+        "jest": "^26.1.0",
+        "jest-expo": "^38.0.2",
         "prettier": "^2.0.5",
         "pretty-quick": "^2.0.1",
+        "react-test-renderer": "^16.13.1",
         "typescript": "~3.8.3"
     },
     "private": true

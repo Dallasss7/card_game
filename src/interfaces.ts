@@ -29,3 +29,11 @@ export interface GlobalObj {
     previous?: Card;
     deckType?: number;
 }
+
+export interface AppState {
+    play: boolean;
+    openSettings: boolean;
+    loading: boolean;
+    width?: number;
+    height?: number;
+}
