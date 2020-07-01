@@ -16,6 +16,7 @@ import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import CardDeck from './src/components/deck';
 import Settings from './src/components/settings';
 import { AppState } from './src/interfaces';
+import ErrorBoundary from './src/error_boundary';
 
 export default class App extends Component<null, AppState> {
     constructor(props: null) {
@@ -120,124 +121,126 @@ export default class App extends Component<null, AppState> {
 
     render(): JSX.Element {
         return (
-            <ImageBackground
-                source={require('./assets/greenPaper.jpg')}
-                style={this.styles.image}
-            >
-                <View style={this.styles.container}>
-                    {this.state.loading ? (
-                        <ActivityIndicator
-                            style={this.styles.loading}
-                            size="large"
-                            color="#0000ff"
-                        />
-                    ) : (
-                        this.state.play && <CardDeck />
-                    )}
-                    {this.state.openSettings ? (
-                        <View>
-                            <Settings />
+            <ErrorBoundary>
+                <ImageBackground
+                    source={require('./assets/greenPaper.jpg')}
+                    style={this.styles.image}
+                >
+                    <View style={this.styles.container}>
+                        {this.state.loading ? (
+                            <ActivityIndicator
+                                style={this.styles.loading}
+                                size="large"
+                                color="#0000ff"
+                            />
+                        ) : (
+                            this.state.play && <CardDeck />
+                        )}
+                        {this.state.openSettings ? (
+                            <View>
+                                <Settings />
+                                <View style={this.styles.drawer}>
+                                    <View>
+                                        <TouchableOpacity
+                                            onPress={() => {
+                                                this.toggleSettings();
+                                            }}
+                                            style={this.styles.icon}
+                                        >
+                                            <IconAntDesign
+                                                name="back"
+                                                size={30}
+                                                color="#4F8EF7"
+                                            />
+                                            <Text style={this.styles.icon_text}>
+                                                BACK
+                                            </Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </View>
+                        ) : (
+                            <View
+                                style={
+                                    !this.state.play
+                                        ? this.styles.menu
+                                        : this.styles.hide
+                                }
+                            >
+                                {!this.state.play && (
+                                    <Button
+                                        title={'Start'}
+                                        onPress={() => {
+                                            this.toggleState();
+                                        }}
+                                    ></Button>
+                                )}
+                                {!this.state.play && (
+                                    <Button
+                                        title="Settings"
+                                        onPress={() => {
+                                            this.toggleSettings();
+                                        }}
+                                    ></Button>
+                                )}
+                                {!this.state.play && (
+                                    <Button
+                                        title="Exit"
+                                        onPress={() => {
+                                            BackHandler.exitApp();
+                                        }}
+                                    ></Button>
+                                )}
+                            </View>
+                        )}
+                        {this.state.play && (
                             <View style={this.styles.drawer}>
                                 <View>
                                     <TouchableOpacity
                                         onPress={() => {
-                                            this.toggleSettings();
+                                            this.toggleLoading();
+                                            setTimeout(() => {
+                                                this.toggleLoading();
+                                            }, 700);
                                         }}
                                         style={this.styles.icon}
                                     >
-                                        <IconAntDesign
-                                            name="back"
+                                        <IconEntypo
+                                            name="shuffle"
                                             size={30}
                                             color="#4F8EF7"
                                         />
                                         <Text style={this.styles.icon_text}>
-                                            BACK
+                                            SHUFFLE
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
+                                {/* <View>
+									<TouchableOpacity onPress={() => this.toggleSettings()} style={this.styles.icon}>
+										<IconFeather name="settings" size={30} color="#4F8EF7" />
+										<Text style={this.styles.icon_text}>SETTINGS</Text>
+									</TouchableOpacity>
+								</View> */}
+                                <View>
+                                    <TouchableOpacity
+                                        onPress={() => this.toggleState()}
+                                        style={this.styles.icon}
+                                    >
+                                        <IconEntypo
+                                            name="menu"
+                                            size={30}
+                                            color="#4F8EF7"
+                                        />
+                                        <Text style={this.styles.icon_text}>
+                                            MAIN MENU
                                         </Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
-                        </View>
-                    ) : (
-                        <View
-                            style={
-                                !this.state.play
-                                    ? this.styles.menu
-                                    : this.styles.hide
-                            }
-                        >
-                            {!this.state.play && (
-                                <Button
-                                    title={'Start'}
-                                    onPress={() => {
-                                        this.toggleState();
-                                    }}
-                                ></Button>
-                            )}
-                            {!this.state.play && (
-                                <Button
-                                    title="Settings"
-                                    onPress={() => {
-                                        this.toggleSettings();
-                                    }}
-                                ></Button>
-                            )}
-                            {!this.state.play && (
-                                <Button
-                                    title="Exit"
-                                    onPress={() => {
-                                        BackHandler.exitApp();
-                                    }}
-                                ></Button>
-                            )}
-                        </View>
-                    )}
-                    {this.state.play && (
-                        <View style={this.styles.drawer}>
-                            <View>
-                                <TouchableOpacity
-                                    onPress={() => {
-                                        this.toggleLoading();
-                                        setTimeout(() => {
-                                            this.toggleLoading();
-                                        }, 700);
-                                    }}
-                                    style={this.styles.icon}
-                                >
-                                    <IconEntypo
-                                        name="shuffle"
-                                        size={30}
-                                        color="#4F8EF7"
-                                    />
-                                    <Text style={this.styles.icon_text}>
-                                        SHUFFLE
-                                    </Text>
-                                </TouchableOpacity>
-                            </View>
-                            {/* <View>
-								<TouchableOpacity onPress={() => this.toggleSettings()} style={this.styles.icon}>
-									<IconFeather name="settings" size={30} color="#4F8EF7" />
-									<Text style={this.styles.icon_text}>SETTINGS</Text>
-								</TouchableOpacity>
-							</View> */}
-                            <View>
-                                <TouchableOpacity
-                                    onPress={() => this.toggleState()}
-                                    style={this.styles.icon}
-                                >
-                                    <IconEntypo
-                                        name="menu"
-                                        size={30}
-                                        color="#4F8EF7"
-                                    />
-                                    <Text style={this.styles.icon_text}>
-                                        MAIN MENU
-                                    </Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    )}
-                </View>
-            </ImageBackground>
+                        )}
+                    </View>
+                </ImageBackground>
+            </ErrorBoundary>
         );
     }
 }
