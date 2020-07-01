@@ -1,5 +1,6 @@
 import { ImageSourcePropType } from 'react-native';
 import Card from './components/card';
+import { ReactNode } from 'react';
 
 export interface CardState {
     defaultImage: ImageSourcePropType;
@@ -36,4 +37,12 @@ export interface AppState {
     loading: boolean;
     width?: number;
     height?: number;
+}
+
+export interface ErrorState {
+    hasError: boolean;
+}
+
+export interface ErrorProp {
+    children: ReactNode;
 }

@@ -21,7 +21,11 @@
         }
     },
     "jest": {
-        "preset": "jest-expo/universal"
+        "preset": "jest-expo/universal",
+        "moduleNameMapper": {
+            "\\.(jpg|ico|jpeg|png)$": "<rootDir>/__mocks__/mock.js",
+            "\\.(css|less)$": "<rootDir>/__mocks__/mock.js"
+        }
     },
     "dependencies": {
         "@react-navigation/native": "^5.6.1",
