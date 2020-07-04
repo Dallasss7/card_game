@@ -118,9 +118,11 @@ export default class Card extends Component<CardProps, CardState> {
                         match: !this.state.match
                     });
 
-                    globalObj.previous?.setState({
-                        match: true
-                    });
+                    if (globalObj.previous) {
+                        globalObj.previous.setState({
+                            match: true
+                        });
+                    }
 
                     globalObj.previous = undefined;
 
@@ -142,11 +144,14 @@ export default class Card extends Component<CardProps, CardState> {
                         defaultImage: this.checkDeckType()
                     });
                     globalObj.held = '';
-                    globalObj.previous?.setState({
-                        press: false,
-                        defaultImage: this.checkDeckType()
-                    });
-                    globalObj.previous = undefined;
+
+                    if (globalObj.previous) {
+                        globalObj.previous.setState({
+                            press: false,
+                            defaultImage: this.checkDeckType()
+                        });
+                        globalObj.previous = undefined;
+                    }
                 }, 700);
                 globalObj.held = '';
             }

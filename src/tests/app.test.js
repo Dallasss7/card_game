@@ -4,13 +4,18 @@ import { Platform, ActivityIndicator } from 'react-native';
 import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
-import App from '../App.tsx';
-import Settings from '../src/components/settings';
-import CardDeck from '../src/components/deck';
+import App from '../../App.tsx';
+import Settings from '../components/settings';
+import CardDeck from '../components/deck';
 
 configure({ adapter: new Adapter() });
 
 describe('<App />', () => {
+    // it('should test App component', () => {
+    // 	const wrapper = shallow(<App />);
+    // 	expect(wrapper).toMatchSnapshot();
+    // });
+
     it('has 2 child', () => {
         if (Platform.OS === 'android' || Platform.OS === 'ios') {
             const tree = renderer.create(<App />).toJSON();

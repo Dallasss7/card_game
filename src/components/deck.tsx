@@ -132,7 +132,9 @@ export default class CardDeck extends Component<unknown, DeckState> {
                 );
             }
         } else {
-            this.state.numbers?.sort(() => 0.5 - Math.random());
+            if (this.state.numbers) {
+                this.state.numbers.sort(() => 0.5 - Math.random());
+            }
             for (let i = 0; i < this.state.numbers.length; i++) {
                 this.state.cards.push(
                     <View key={i}>
