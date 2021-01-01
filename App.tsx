@@ -16,7 +16,7 @@ import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import CardDeck from './src/components/deck';
 import Settings from './src/components/settings';
 import { AppState } from './src/interfaces';
-import ErrorBoundary from './src/error_boundary';
+import ErrorBoundary from './src/components/error_boundary';
 
 export default class App extends Component<null, AppState> {
     constructor(props: null) {
@@ -108,17 +108,6 @@ export default class App extends Component<null, AppState> {
         });
     }
 
-    // componentDidMount() {
-    // 	BackHandler.addEventListener('hardwareBackPress',() => {this.setState({on: false}); return false});
-    // }
-
-    // onBackPress(): boolean{
-    // 	this.setState({
-    // 		on: false
-    // 	})
-    // 	return false;
-    // }
-
     render(): JSX.Element {
         return (
             <ErrorBoundary>
@@ -169,6 +158,7 @@ export default class App extends Component<null, AppState> {
                             >
                                 {!this.state.play && (
                                     <Button
+                                        testID="startButton"
                                         title={'Start'}
                                         onPress={() => {
                                             this.toggleState();
@@ -177,6 +167,7 @@ export default class App extends Component<null, AppState> {
                                 )}
                                 {!this.state.play && (
                                     <Button
+                                        testID="settingsButton"
                                         title="Settings"
                                         onPress={() => {
                                             this.toggleSettings();
@@ -185,6 +176,7 @@ export default class App extends Component<null, AppState> {
                                 )}
                                 {!this.state.play && (
                                     <Button
+                                        testID="exitButton"
                                         title="Exit"
                                         onPress={() => {
                                             BackHandler.exitApp();
@@ -194,9 +186,13 @@ export default class App extends Component<null, AppState> {
                             </View>
                         )}
                         {this.state.play && (
-                            <View style={this.styles.drawer}>
+                            <View
+                                testID="loadingContainer"
+                                style={this.styles.drawer}
+                            >
                                 <View>
                                     <TouchableOpacity
+                                        testID="loadingButton"
                                         onPress={() => {
                                             this.toggleLoading();
                                             setTimeout(() => {
@@ -215,12 +211,6 @@ export default class App extends Component<null, AppState> {
                                         </Text>
                                     </TouchableOpacity>
                                 </View>
-                                {/* <View>
-									<TouchableOpacity onPress={() => this.toggleSettings()} style={this.styles.icon}>
-										<IconFeather name="settings" size={30} color="#4F8EF7" />
-										<Text style={this.styles.icon_text}>SETTINGS</Text>
-									</TouchableOpacity>
-								</View> */}
                                 <View>
                                     <TouchableOpacity
                                         onPress={() => this.toggleState()}

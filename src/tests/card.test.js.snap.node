@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Card /> should test Card component 1`] = `
+<TouchableOpacity
+  activeOpacity={0.2}
+  focusedOpacity={0.7}
+  onPress={[Function]}
+  style={
+    Object {
+      "borderRadius": 5,
+      "marginTop": "35%",
+      "overflow": "hidden",
+    }
+  }
+>
+  <ImageBackground
+    borderRadius={6}
+    resizeMode="cover"
+    source={1}
+    style={
+      Object {
+        "display": "flex",
+        "height": 80,
+        "width": 60,
+      }
+    }
+  />
+</TouchableOpacity>
+`;

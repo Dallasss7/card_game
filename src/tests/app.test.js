@@ -1,8 +1,19 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { Platform, ActivityIndicator } from 'react-native';
-import { configure, shallow } from 'enzyme';
+import {
+    Platform,
+    ActivityIndicator,
+    Button,
+    BackHandler,
+    TouchableOpacity
+} from 'react-native';
+import { configure, shallow, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import { createSerializer } from 'enzyme-to-json';
 
 import App from '../../App.tsx';
 import Settings from '../components/settings';
@@ -10,11 +21,13 @@ import CardDeck from '../components/deck';
 
 configure({ adapter: new Adapter() });
 
+expect.addSnapshotSerializer(createSerializer({ mode: 'deep' }));
+
 describe('<App />', () => {
-    // it('should test App component', () => {
-    // 	const wrapper = shallow(<App />);
-    // 	expect(wrapper).toMatchSnapshot();
-    // });
+    it('should test App component', () => {
+        const wrapper = shallow(<App />);
+        expect(wrapper).toMatchSnapshot();
+    });
 
     it('has 2 child', () => {
         if (Platform.OS === 'android' || Platform.OS === 'ios') {
@@ -53,6 +66,93 @@ describe('<App />', () => {
             appComponent.instance().toggleState();
             appComponent.update();
             expect(appComponent.find(CardDeck).length).toBe(1);
+        } else {
+            return;
+        }
+    });
+
+    it('calls toggleSettings on click', () => {
+        if (Platform.OS === 'android' || Platform.OS === 'ios') {
+            const appComponent = shallow(<App />);
+            const instance = appComponent.instance();
+            instance.toggleSettings();
+            appComponent.update();
+            const spyPreventDefault = jest.spyOn(instance, 'toggleSettings');
+            appComponent.update();
+            appComponent.find('TouchableOpacity').props().onPress();
+            expect(spyPreventDefault).toHaveBeenCalled();
+        } else {
+            return;
+        }
+    });
+
+    it('calls toggleState on click', () => {
+        if (Platform.OS === 'android' || Platform.OS === 'ios') {
+            const appComponent = shallow(<App />);
+            const instance = appComponent.instance();
+            const spyPreventDefault = jest.spyOn(instance, 'toggleState');
+            appComponent.update();
+            appComponent
+                .find(Button)
+                .findWhere((node) => node.prop('testID') === 'startButton')
+                .props()
+                .onPress();
+            expect(spyPreventDefault).toHaveBeenCalled();
+        } else {
+            return;
+        }
+    });
+
+    it('calls toggleSettings on click', () => {
+        if (Platform.OS === 'android' || Platform.OS === 'ios') {
+            const appComponent = shallow(<App />);
+            const instance = appComponent.instance();
+            const spyPreventDefault = jest.spyOn(instance, 'toggleSettings');
+            appComponent.update();
+            appComponent
+                .find(Button)
+                .findWhere((node) => node.prop('testID') === 'settingsButton')
+                .props()
+                .onPress();
+            expect(spyPreventDefault).toHaveBeenCalled();
+        } else {
+            return;
+        }
+    });
+
+    xit('calls toggleSettings on click', () => {
+        if (Platform.OS === 'android' || Platform.OS === 'ios') {
+            const testProps = {
+                play: true,
+                openSettings: false,
+                loading: false
+            };
+
+            const appComponent = shallow(<App {...testProps} />);
+            const instance = appComponent.instance();
+            const spyPreventDefault = jest.spyOn(instance, 'toggleLoading');
+            appComponent
+                .find(TouchableOpacity)
+                .findWhere((node) => node.prop('testID') === 'loadingButton')
+                .props()
+                .onPress();
+            expect(spyPreventDefault).toHaveBeenCalled();
+        } else {
+            return;
+        }
+    });
+
+    it('calls exit on click', () => {
+        if (Platform.OS === 'android' || Platform.OS === 'ios') {
+            const appComponent = shallow(<App />);
+            const spyPreventDefault = jest.spyOn(BackHandler, 'exitApp');
+            appComponent.update();
+            appComponent
+                .find(Button)
+                .findWhere((node) => node.prop('testID') === 'exitButton')
+                .props()
+                .onPress();
+            expect(spyPreventDefault).toHaveBeenCalled();
         } else {
             return;
         }

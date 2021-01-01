@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text } from 'react-native';
 
-import { ErrorState, ErrorProp } from './interfaces';
+import { ErrorState, ErrorProp } from '../interfaces';
 
 export default class ErrorBoundary extends Component<ErrorProp, ErrorState> {
     constructor(props: ErrorProp) {

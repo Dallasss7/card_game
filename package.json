@@ -26,7 +26,11 @@
         "moduleNameMapper": {
             "\\.(jpg|ico|jpeg|png)$": "<rootDir>/__mocks__/mock.js",
             "\\.(css|less)$": "<rootDir>/__mocks__/mock.js"
-        }
+        },
+        "testEnvironment": "jsdom",
+        "snapshotSerializers": [
+            "enzyme-to-json/serializer"
+        ]
     },
     "dependencies": {
         "@react-navigation/native": "^5.6.1",
@@ -49,6 +53,7 @@
         "babel-preset-expo": "~8.1.0",
         "enzyme": "^3.11.0",
         "enzyme-adapter-react-16": "^1.15.2",
+        "enzyme-to-json": "^3.5.0",
         "eslint": "^7.3.1",
         "eslint-config-airbnb-typescript": "^8.0.2",
         "eslint-config-prettier": "^6.11.0",
@@ -58,6 +63,7 @@
         "eslint-plugin-react-hooks": "^4.0.4",
         "husky": "^4.2.5",
         "jest": "^26.1.0",
+        "jest-enzyme": "^7.1.2",
         "jest-expo": "^38.0.2",
         "prettier": "^2.0.5",
         "pretty-quick": "^2.0.1",

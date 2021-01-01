@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<App /> should test App component 1`] = `
+<ErrorBoundary>
+  <ImageBackground
+    source={1}
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flex": 1,
+          "height": "100%",
+          "justifyContent": "center",
+          "width": "100%",
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignSelf": "center",
+            "height": "20%",
+            "justifyContent": "space-between",
+            "width": "50%",
+          }
+        }
+      >
+        <Button
+          onPress={[Function]}
+          testID="startButton"
+          title="Start"
+        />
+        <Button
+          onPress={[Function]}
+          testID="settingsButton"
+          title="Settings"
+        />
+        <Button
+          onPress={[Function]}
+          testID="exitButton"
+          title="Exit"
+        />
+      </View>
+    </View>
+  </ImageBackground>
+</ErrorBoundary>
+`;
