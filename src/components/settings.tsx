@@ -36,7 +36,12 @@ export default function Settings(): JSX.Element {
                 setModalVisible(true);
             }}
         >
-            <Text style={styles.title}>
+            <Text
+                accessible={true}
+                accessibilityLabel="Deck Types"
+                accessibilityHint="Select Card Deck Type"
+                style={styles.title}
+            >
                 {title}
                 {globalObj.deckType === selection && (
                     <IconAntDesign name="check" size={20} color="#4F8EF7" />

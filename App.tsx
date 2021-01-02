@@ -141,7 +141,12 @@ export default class App extends Component<null, AppState> {
                                                 size={30}
                                                 color="#4F8EF7"
                                             />
-                                            <Text style={this.styles.icon_text}>
+                                            <Text
+                                                accessible={true}
+                                                accessibilityLabel="Go back"
+                                                accessibilityHint="Navigates to the previous screen"
+                                                style={this.styles.icon_text}
+                                            >
                                                 BACK
                                             </Text>
                                         </TouchableOpacity>
