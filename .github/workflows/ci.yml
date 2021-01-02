@@ -11,6 +11,7 @@ jobs:
             - name: Install npm dependencies
               run: |
                   npm install
+                  npm install jest@latest --save-dev
             - name: Run tests
               run: |
                   npm run test
