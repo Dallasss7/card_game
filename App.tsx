@@ -44,16 +44,6 @@ export default function App(): JSX.Element {
             openSettings: !appState.openSettings
         });
     };
-    // export default class App extends Component<null, AppState> {
-    // constructor(props: null) {
-    //     super(props);
-
-    //     this.state = {
-    //         play: false,
-    //         openSettings: false,
-    //         loading: false
-    //     };
-    // }
 
     const styles = StyleSheet.create({
         image: {
@@ -115,7 +105,6 @@ export default function App(): JSX.Element {
         }
     });
 
-    // render(): JSX.Element {
     return (
         <ErrorBoundary>
             <ImageBackground
@@ -237,6 +226,4 @@ export default function App(): JSX.Element {
             </ImageBackground>
         </ErrorBoundary>
     );
-    // }
-    // }
 }
