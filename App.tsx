@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import {
     StyleSheet,
     ImageBackground,
@@ -15,21 +15,47 @@ import IconAntDesign from 'react-native-vector-icons/AntDesign';
 
 import CardDeck from './src/components/deck';
 import Settings from './src/components/settings';
-import { AppState } from './src/interfaces';
 import ErrorBoundary from './src/components/error_boundary';
 
-export default class App extends Component<null, AppState> {
-    constructor(props: null) {
-        super(props);
+export default function App(): JSX.Element {
+    const [appState, setAppState] = useState({
+        play: false,
+        loading: false,
+        openSettings: false
+    });
 
-        this.state = {
-            play: false,
-            openSettings: false,
-            loading: false
-        };
-    }
+    const togglePlay = (): void => {
+        setAppState({
+            ...appState,
+            play: !appState.play
+        });
+    };
 
-    styles = StyleSheet.create({
+    const toggleLoading = (): void => {
+        setAppState({
+            ...appState,
+            loading: !appState.loading
+        });
+    };
+
+    const toggleSettings = (): void => {
+        setAppState({
+            ...appState,
+            openSettings: !appState.openSettings
+        });
+    };
+    // export default class App extends Component<null, AppState> {
+    // constructor(props: null) {
+    //     super(props);
+
+    //     this.state = {
+    //         play: false,
+    //         openSettings: false,
+    //         loading: false
+    //     };
+    // }
+
+    const styles = StyleSheet.create({
         image: {
             flex: 1
         },
@@ -89,153 +115,128 @@ export default class App extends Component<null, AppState> {
         }
     });
 
-    toggleState(): void {
-        this.setState({
-            play: !this.state.play
-            // openSettings: false
-        });
-    }
-
-    toggleLoading(): void {
-        this.setState({
-            loading: !this.state.loading
-        });
-    }
-
-    toggleSettings(): void {
-        this.setState({
-            openSettings: !this.state.openSettings
-        });
-    }
-
-    render(): JSX.Element {
-        return (
-            <ErrorBoundary>
-                <ImageBackground
-                    source={require('./assets/greenPaper.jpg')}
-                    style={this.styles.image}
-                >
-                    <View style={this.styles.container}>
-                        {this.state.loading ? (
-                            <ActivityIndicator
-                                style={this.styles.loading}
-                                size="large"
-                                color="#0000ff"
-                            />
-                        ) : (
-                            this.state.play && <CardDeck />
-                        )}
-                        {this.state.openSettings ? (
-                            <View>
-                                <Settings />
-                                <View style={this.styles.drawer}>
-                                    <View>
-                                        <TouchableOpacity
-                                            onPress={() => {
-                                                this.toggleSettings();
-                                            }}
-                                            style={this.styles.icon}
+    // render(): JSX.Element {
+    return (
+        <ErrorBoundary>
+            <ImageBackground
+                source={require('./assets/greenPaper.jpg')}
+                style={styles.image}
+            >
+                <View style={styles.container}>
+                    {appState.loading ? (
+                        <ActivityIndicator
+                            style={styles.loading}
+                            size="large"
+                            color="#0000ff"
+                        />
+                    ) : (
+                        appState.play && <CardDeck />
+                    )}
+                    {appState.openSettings ? (
+                        <View>
+                            <Settings />
+                            <View style={styles.drawer}>
+                                <View>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            toggleSettings();
+                                        }}
+                                        style={styles.icon}
+                                    >
+                                        <IconAntDesign
+                                            name="back"
+                                            size={30}
+                                            color="#4F8EF7"
+                                        />
+                                        <Text
+                                            accessible={true}
+                                            accessibilityLabel="Go back"
+                                            accessibilityHint="Navigates to the previous screen"
+                                            style={styles.icon_text}
                                         >
-                                            <IconAntDesign
-                                                name="back"
-                                                size={30}
-                                                color="#4F8EF7"
-                                            />
-                                            <Text
-                                                accessible={true}
-                                                accessibilityLabel="Go back"
-                                                accessibilityHint="Navigates to the previous screen"
-                                                style={this.styles.icon_text}
-                                            >
-                                                BACK
-                                            </Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-                            </View>
-                        ) : (
-                            <View
-                                style={
-                                    !this.state.play
-                                        ? this.styles.menu
-                                        : this.styles.hide
-                                }
-                            >
-                                {!this.state.play && (
-                                    <Button
-                                        testID="startButton"
-                                        title={'Start'}
-                                        onPress={() => {
-                                            this.toggleState();
-                                        }}
-                                    ></Button>
-                                )}
-                                {!this.state.play && (
-                                    <Button
-                                        testID="settingsButton"
-                                        title="Settings"
-                                        onPress={() => {
-                                            this.toggleSettings();
-                                        }}
-                                    ></Button>
-                                )}
-                                {!this.state.play && (
-                                    <Button
-                                        testID="exitButton"
-                                        title="Exit"
-                                        onPress={() => {
-                                            BackHandler.exitApp();
-                                        }}
-                                    ></Button>
-                                )}
-                            </View>
-                        )}
-                        {this.state.play && (
-                            <View
-                                testID="loadingContainer"
-                                style={this.styles.drawer}
-                            >
-                                <View>
-                                    <TouchableOpacity
-                                        testID="loadingButton"
-                                        onPress={() => {
-                                            this.toggleLoading();
-                                            setTimeout(() => {
-                                                this.toggleLoading();
-                                            }, 700);
-                                        }}
-                                        style={this.styles.icon}
-                                    >
-                                        <IconEntypo
-                                            name="shuffle"
-                                            size={30}
-                                            color="#4F8EF7"
-                                        />
-                                        <Text style={this.styles.icon_text}>
-                                            SHUFFLE
-                                        </Text>
-                                    </TouchableOpacity>
-                                </View>
-                                <View>
-                                    <TouchableOpacity
-                                        onPress={() => this.toggleState()}
-                                        style={this.styles.icon}
-                                    >
-                                        <IconEntypo
-                                            name="menu"
-                                            size={30}
-                                            color="#4F8EF7"
-                                        />
-                                        <Text style={this.styles.icon_text}>
-                                            MAIN MENU
+                                            BACK
                                         </Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
-                        )}
-                    </View>
-                </ImageBackground>
-            </ErrorBoundary>
-        );
-    }
+                        </View>
+                    ) : (
+                        <View
+                            style={!appState.play ? styles.menu : styles.hide}
+                        >
+                            {!appState.play && (
+                                <Button
+                                    testID="startButton"
+                                    title={'Start'}
+                                    onPress={() => {
+                                        togglePlay();
+                                    }}
+                                ></Button>
+                            )}
+                            {!appState.play && (
+                                <Button
+                                    testID="settingsButton"
+                                    title="Settings"
+                                    onPress={() => {
+                                        toggleSettings();
+                                    }}
+                                ></Button>
+                            )}
+                            {!appState.play && (
+                                <Button
+                                    testID="exitButton"
+                                    title="Exit"
+                                    onPress={() => {
+                                        BackHandler.exitApp();
+                                    }}
+                                ></Button>
+                            )}
+                        </View>
+                    )}
+                    {appState.play && (
+                        <View testID="loadingContainer" style={styles.drawer}>
+                            <View>
+                                <TouchableOpacity
+                                    testID="loadingButton"
+                                    onPress={() => {
+                                        toggleLoading();
+                                        setTimeout(() => {
+                                            toggleLoading();
+                                        }, 700);
+                                    }}
+                                    style={styles.icon}
+                                >
+                                    <IconEntypo
+                                        name="shuffle"
+                                        size={30}
+                                        color="#4F8EF7"
+                                    />
+                                    <Text style={styles.icon_text}>
+                                        SHUFFLE
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View>
+                                <TouchableOpacity
+                                    onPress={() => togglePlay()}
+                                    style={styles.icon}
+                                >
+                                    <IconEntypo
+                                        name="menu"
+                                        size={30}
+                                        color="#4F8EF7"
+                                    />
+                                    <Text style={styles.icon_text}>
+                                        MAIN MENU
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    )}
+                </View>
+            </ImageBackground>
+        </ErrorBoundary>
+    );
+    // }
+    // }
 }
