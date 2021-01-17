@@ -7,7 +7,8 @@ import {
     BackHandler,
     TouchableOpacity,
     Text,
-    ActivityIndicator
+    ActivityIndicator,
+    AppState
 } from 'react-native';
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
@@ -187,10 +188,15 @@ export default function App(): JSX.Element {
                             <View>
                                 <TouchableOpacity
                                     testID="loadingButton"
+                                    disabled={appState.loading}
                                     onPress={() => {
                                         toggleLoading();
                                         setTimeout(() => {
                                             toggleLoading();
+                                            setAppState({
+                                                ...appState,
+                                                play: true
+                                            });
                                         }, 700);
                                     }}
                                     style={styles.icon}
