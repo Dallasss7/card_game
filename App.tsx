@@ -19,6 +19,8 @@ import Settings from './src/components/settings';
 import ErrorBoundary from './src/components/error_boundary';
 
 export default function App(): JSX.Element {
+    // ADD SCORE KEEPING
+
     const [appState, setAppState] = useState({
         play: false,
         loading: false,
@@ -112,7 +114,7 @@ export default function App(): JSX.Element {
                 source={require('./assets/greenPaper.jpg')}
                 style={styles.image}
             >
-                <View style={styles.container}>
+                <View testID="mainMenu" style={styles.container}>
                     {appState.loading ? (
                         <ActivityIndicator
                             style={styles.loading}
@@ -126,7 +128,7 @@ export default function App(): JSX.Element {
                         <View>
                             <Settings />
                             <View style={styles.drawer}>
-                                <View>
+                                <View testID="toggleSettings">
                                     <TouchableOpacity
                                         onPress={() => {
                                             toggleSettings();

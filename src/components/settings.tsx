@@ -30,6 +30,7 @@ export default function Settings(): JSX.Element {
 
     const DeckItems = ({ title, selection }) => (
         <TouchableOpacity
+            testID="settings"
             style={styles.item}
             onPress={() => {
                 setSelectedValue(selection);
