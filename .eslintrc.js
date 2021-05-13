@@ -23,5 +23,12 @@ module.exports = {
         ecmaVersion: 11
     },
     plugins: ['react', '@typescript-eslint'],
-    rules: {}
+    rules: {},
+    ignorePatterns: [
+        'node_modules/**',
+        './node_modules/**',
+        '**/node_modules/**',
+        'node_modules/cheerio/lib/types.d.ts',
+        '/node_modules/*.ts'
+    ]
 };
