@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-
+import './object_mocks';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import {

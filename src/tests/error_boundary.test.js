@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+import './object_mocks';
 import React from 'react';
 import { Text } from 'react-native';
 import { configure, shallow } from 'enzyme';
