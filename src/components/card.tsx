@@ -7,8 +7,9 @@ import {
     Text,
     ImageSourcePropType
 } from 'react-native';
-import { CardProps, CardState } from '../interfaces';
+import * as Haptics from 'expo-haptics';
 
+import { CardProps, CardState } from '../interfaces';
 import { globalObj } from '../global';
 
 export default class Card extends Component<CardProps, CardState> {
@@ -173,6 +174,7 @@ export default class Card extends Component<CardProps, CardState> {
             <TouchableOpacity
                 style={this.styles.container}
                 onPress={() => {
+                    // Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
                     !this.state.match ? this.togglePress() : null;
                 }}
             >
@@ -183,7 +185,9 @@ export default class Card extends Component<CardProps, CardState> {
                     style={
                         !this.state.match
                             ? this.styles.image
-                            : this.styles.hidden
+                            : Haptics.impactAsync(
+                                  Haptics.ImpactFeedbackStyle.Heavy
+                              ) && this.styles.hidden
                     }
                 >
                     {this.state.press && (
