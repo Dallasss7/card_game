@@ -1,43 +1,24 @@
+/**
+ * @jest-environment jsdom
+ */
+import './object_mocks';
 import React from 'react';
-import { Platform } from 'react-native';
 import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import { Platform } from 'react-native';
+import { createSerializer } from 'enzyme-to-json';
 
-import { globalObj } from '../global.ts';
 import Deck from '../components/deck';
+import { globalObj } from '../global.ts';
 
 configure({ adapter: new Adapter() });
 
+expect.addSnapshotSerializer(createSerializer({ mode: 'deep' }));
+
 describe('<CardDeck />', () => {
-    // it('should test App component', () => {
-    // 	const wrapper = shallow(<Deck />);
-    // 	expect(wrapper).toMatchSnapshot();
-    // });
-
-    it('shuffles the letters if deckType is 0', () => {
-        if (Platform.OS === 'android' || Platform.OS === 'ios') {
-            globalObj.deckType = 0;
-            const deckComponent = shallow(<Deck />);
-            expect(deckComponent.instance().isDeckTypeDefault()).toBe(true);
-            deckComponent.instance().forceUpdate();
-            deckComponent.update();
-            expect(deckComponent.state('letters').length).toBe(34);
-        } else {
-            return;
-        }
-    });
-
-    it('shuffles the numbers if deckType is 1', () => {
-        if (Platform.OS === 'android' || Platform.OS === 'ios') {
-            globalObj.deckType = 1;
-            const deckComponent = shallow(<Deck />);
-            expect(deckComponent.instance().isDeckTypeDefault()).toBe(false);
-            deckComponent.instance().forceUpdate();
-            deckComponent.update();
-            expect(deckComponent.state('letters').length).toBe(0);
-        } else {
-            return;
-        }
+    it('should test Deck component', () => {
+        const wrapper = shallow(<Deck />);
+        expect(wrapper).toMatchSnapshot();
     });
 
     it('sets winner state on function call', () => {
