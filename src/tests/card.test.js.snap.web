@@ -2,8 +2,6 @@
 
 exports[`<Card /> should test Card component 1`] = `
 <TouchableOpacity
-  activeOpacity={0.2}
-  focusedOpacity={0.7}
   onPress={[Function]}
   style={
     Object {

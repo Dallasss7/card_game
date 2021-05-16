@@ -166,7 +166,7 @@ describe('<Card />', () => {
         expect(globalObj.held.length).toBe(0);
     });
 
-    it('on press should call togglePress if there is no match', () => {
+    xit('on press should call togglePress if there is no match', () => {
         const testProps = {
             // eslint-disable-next-line @typescript-eslint/no-empty-function
             letterDisplay: () => {},

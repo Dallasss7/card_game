@@ -1,8 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Card /> should test Card component 1`] = `
-<TouchableOpacity
-  activeOpacity={0.2}
+<ForwardRef
   onPress={[Function]}
   style={
     Object {
@@ -24,5 +23,5 @@ exports[`<Card /> should test Card component 1`] = `
       }
     }
   />
-</TouchableOpacity>
+</ForwardRef>
 `;
