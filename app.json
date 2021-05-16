@@ -1,6 +1,5 @@
 {
     "expo": {
-        "sdkVersion": "41.0.0",
         "name": "card_game",
         "slug": "card_game",
         "platforms": ["ios", "android", "web"],
