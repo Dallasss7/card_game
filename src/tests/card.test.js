@@ -1,12 +1,12 @@
 /**
  * @jest-environment jsdom
  */
-
 import React from 'react';
 import { configure, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { createSerializer } from 'enzyme-to-json';
 
+import './object_mocks';
 import Card from '../components/card';
 import { globalObj } from '../global';
 
