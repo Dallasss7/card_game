@@ -43,8 +43,7 @@
         "react-native-reanimated": "~2.1.0",
         "react-native-vector-icons": "^6.6.0",
         "react-native-web": "~0.13.12",
-        "expo-haptics": "~10.0.0",
-        "expo-av": "~9.1.2"
+        "expo-haptics": "~10.0.0"
     },
     "devDependencies": {
         "@babel/core": "~7.9.0",
