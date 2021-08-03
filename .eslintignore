@@ -1,0 +1,6 @@
+node_modules/**
+./node_modules/**
+**/node_modules/**
+node_modules/cheerio/lib/types.d.ts
+/node_modules/*.ts
+**/*.ts
